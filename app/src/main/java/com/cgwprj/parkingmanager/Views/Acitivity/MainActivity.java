@@ -3,6 +3,9 @@ package com.cgwprj.parkingmanager.Views.Acitivity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,6 +19,7 @@ import android.view.Menu;
 
 import com.cgwprj.parkingmanager.Data.UserData;
 import com.cgwprj.parkingmanager.R;
+import com.cgwprj.parkingmanager.Views.Fragments.MainFragment;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity
@@ -36,6 +40,9 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        replaceFragment(MainFragment.newInstance());
+
     }
 
     @Override
@@ -93,5 +100,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    // Fragment 변환을 해주기 위한 부분, Fragment의 Instance를 받아서 변경
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_fragment, fragment).commit();
     }
 }

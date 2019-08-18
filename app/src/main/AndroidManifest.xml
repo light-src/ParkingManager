@@ -13,7 +13,6 @@
         <activity android:name=".Views.Acitivity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -21,6 +20,7 @@
             android:name=".Views.Acitivity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
     </application>
 
