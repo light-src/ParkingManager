@@ -1,6 +1,7 @@
 package com.cgwprj.parkingmanager.Views.Acitivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +28,17 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        createSignInIntent();
+        SharedPreferences sf = getSharedPreferences("User",MODE_PRIVATE);
+        //text라는 key에 저장된 값이 있는지 확인. 아무값도 들어있지 않으면 ""를 반환
+        String email = sf.getString("email","");
+
+        if(email.equals(""))
+            createSignInIntent();
+        else{
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+
     }
 
     public void createSignInIntent() {
@@ -57,12 +68,21 @@ public class SplashActivity extends AppCompatActivity {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
+
+                SharedPreferences sf = getSharedPreferences("User",MODE_PRIVATE);
+
+                String email = response.getEmail();
+                //저장을 하기위해 editor를 이용하여 값을 저장시켜준다.
+                SharedPreferences.Editor editor = sf.edit();
+                editor.putString("email",email); // key, value를 이용하여 저장하는 형태
+                editor.apply();
+
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String email = response.getEmail();
+
                 Intent intent = new Intent(this, MainActivity.class);
                 UserData.getInstance().setUser(user);
-                UserData.getInstance().setUserIdHash(Integer.toString(email.hashCode()));
+                UserData.getInstance().setParkingLot(Integer.toString(email.hashCode()));
                 startActivity(intent);
                 // ...
             } else {

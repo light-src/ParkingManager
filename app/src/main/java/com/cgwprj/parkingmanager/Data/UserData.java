@@ -6,7 +6,7 @@ public class UserData {
     private UserData(){}
 
     private static UserData instance = null;
-    private String userIdHash;
+    private String parkingLot = "TEMP";
     private FirebaseUser user;
 
     public static UserData getInstance(){
@@ -18,8 +18,12 @@ public class UserData {
         return instance;
     }
 
-    public void setUserIdHash(String userIdHash) {
-        this.userIdHash = userIdHash;
+    public String getParkingLot(){
+        return parkingLot;
+    }
+
+    public void setParkingLot(String parkingLot) {
+        this.parkingLot = parkingLot;
     }
 
     public FirebaseUser getUser() {
