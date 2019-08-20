@@ -5,13 +5,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.cgwprj.parkingmanager.Data.UserData;
 import com.cgwprj.parkingmanager.Models.CarInfo;
 import com.cgwprj.parkingmanager.R;
 import com.cgwprj.parkingmanager.Utils.Calculator;
 import com.cgwprj.parkingmanager.Utils.Converter;
-import com.google.firebase.database.annotations.NotNull;
+import com.cgwprj.parkingmanager.Views.Acitivity.MainActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Date;
 
@@ -50,6 +54,8 @@ public class InquiryFragment extends Fragment {
         TextView outDate = view.findViewById(R.id.inq_exit_date);
         TextView taken = view.findViewById(R.id.inq_taken_time);
         TextView fee = view.findViewById(R.id.inq_fee);
+        Button exitBtn = view.findViewById(R.id.inq_exit);
+        Button cancelBtn = view.findViewById(R.id.inq_cancel);
 
         Date enroll = Converter.getDateByString(carInfo.getRegisterTime());
         Date out = new Date();
@@ -63,7 +69,30 @@ public class InquiryFragment extends Fragment {
         taken.setText(Integer.toString(takenTime));
         fee.setText(Integer.toString(feeInteger));
 
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference myRef = FirebaseDatabase.getInstance().getReference()
+                        .child(UserData.getInstance().getParkingLot())
+                        .child(Integer.toString(carInfo.hashCode()));
+                myRef.setValue(null);
+
+                ChangeFragmentToMain();
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChangeFragmentToMain();
+            }
+        });
+
         return view;
+    }
+
+    private void ChangeFragmentToMain(){
+        ((MainActivity)getActivity()).ChangeFragmentToMain();
     }
 
 }

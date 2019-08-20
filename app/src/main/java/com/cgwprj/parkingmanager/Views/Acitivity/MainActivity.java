@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.cgwprj.parkingmanager.Data.UserData;
 import com.cgwprj.parkingmanager.Models.CarInfo;
 import com.cgwprj.parkingmanager.R;
 import com.cgwprj.parkingmanager.Views.Fragments.EnrollFragment;
@@ -39,23 +40,51 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference mRef;
     List<CarInfo> carInfos;
     int currentFragment;
+    EditText search;
     ChildEventListener childEventListener = new ChildEventListener() {
+
+        Fragment fragment;
+
+        private boolean isMainFragment(){
+            fragment = getSupportFragmentManager().findFragmentById(R.id.main_fragment);
+            return fragment instanceof MainFragment;
+        }
+
         @Override
         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
             CarInfo carInfo = dataSnapshot.getValue(CarInfo.class);
             carInfos.add(carInfo);
+
+            if (isMainFragment()){
+                MainFragment mainFragment = (MainFragment) fragment;
+                mainFragment.addCarInfoToList(carInfo);
+            }
+
         }
 
         @Override
         public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
             CarInfo carInfo = dataSnapshot.getValue(CarInfo.class);
             carInfos.remove(carInfo);
+
+            if (isMainFragment()){
+                MainFragment mainFragment = (MainFragment) fragment;
+                mainFragment.deleteCarInfoFromList(carInfo);
+            }
         }
 
         @Override   public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
         @Override   public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
         @Override   public void onCancelled(@NonNull DatabaseError databaseError) {}
     };
+
+    public List<CarInfo> getCarInfos(){
+        return this.carInfos;
+    }
+    public void ChangeFragmentToMain(){
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, new MainFragment()).commitNow();
+        search.setText("");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,13 +104,13 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // Firebase
-        mRef = FirebaseDatabase.getInstance().getReference();
+        mRef = FirebaseDatabase.getInstance().getReference().child(UserData.getInstance().getParkingLot());
         mRef.addChildEventListener(childEventListener);
 
         // Fragment
         replaceFragment(MainFragment.newInstance());
 
-        final EditText search = findViewById(R.id.search_text);
+        search = findViewById(R.id.search_text);
         Button search_btn = findViewById(R.id.search_button);
 
         search_btn.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +120,8 @@ public class MainActivity extends AppCompatActivity
                 FragmentChange(carNumber);
             }
         });
+
+        ChangeFragmentToMain();
     }
 
     private void FragmentChange(String carNumber){
@@ -116,6 +147,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private CarInfo getCarInfo(String carNumber){
+        if(carInfos == null)
+            return null;
+
         for (CarInfo c : carInfos){
             if(c.getCarNumber().equals(carNumber))
                 return c;

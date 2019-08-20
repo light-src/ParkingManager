@@ -12,6 +12,7 @@ import com.cgwprj.parkingmanager.Data.UserData;
 import com.cgwprj.parkingmanager.Models.CarInfo;
 import com.cgwprj.parkingmanager.R;
 import com.cgwprj.parkingmanager.Utils.Converter;
+import com.cgwprj.parkingmanager.Views.Acitivity.MainActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -50,6 +51,7 @@ public class EnrollFragment extends Fragment {
         final TextView car = view.findViewById(R.id.enroll_car_number);
         TextView enrollDate = view.findViewById(R.id.enroll_enroll_date);
         Button enrollBtn = view.findViewById(R.id.enroll_enter);
+        Button cancelBtn = view.findViewById(R.id.enroll_cancel);
 
         Date now = new Date();
         final String nowString = Converter.getStringByDate(now);
@@ -65,8 +67,17 @@ public class EnrollFragment extends Fragment {
                 carInfo.setCarNumber(carNumber);
 
                 sendCarInfoToFireBase(carInfo);
+                ChangeFragmentToMain();
             }
         });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChangeFragmentToMain();
+            }
+        });
+
 
         return view;
     }
@@ -78,4 +89,8 @@ public class EnrollFragment extends Fragment {
         myRef.setValue(carInfo);
     }
 
+
+    private void ChangeFragmentToMain(){
+        ((MainActivity)getActivity()).ChangeFragmentToMain();
+    }
 }
