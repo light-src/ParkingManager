@@ -205,14 +205,6 @@ public class MainActivity extends AppCompatActivity
             ChangeFragmentToMain();
         } else if (id == R.id.nav_gallery) {
             replaceFragment(LookupFragment.newInstance(""));
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
