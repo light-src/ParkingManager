@@ -1,21 +1,29 @@
 package com.cgwprj.parkingmanager.Views.Fragments;
 
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cgwprj.parkingmanager.Data.UserData;
 import com.cgwprj.parkingmanager.Models.CarInfo;
+import com.cgwprj.parkingmanager.Models.CarInquiryInfo;
 import com.cgwprj.parkingmanager.R;
 import com.cgwprj.parkingmanager.Utils.Calculator;
 import com.cgwprj.parkingmanager.Utils.Converter;
 import com.cgwprj.parkingmanager.Views.Acitivity.MainActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
 
@@ -23,6 +31,7 @@ public class InquiryFragment extends Fragment {
 
     private static final String CARINFO = "CARINFO";
     private CarInfo carInfo;
+    FirebaseFirestore db;
 
     public InquiryFragment() {
         // Required empty public constructor
@@ -49,7 +58,7 @@ public class InquiryFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_inquiry, container, false);
 
-        TextView carNumber = view.findViewById(R.id.inq_car_number);
+        final TextView carNumber = view.findViewById(R.id.inq_car_number);
         TextView enrollDate = view.findViewById(R.id.inq_enroll_date);
         TextView outDate = view.findViewById(R.id.inq_exit_date);
         TextView taken = view.findViewById(R.id.inq_taken_time);
@@ -57,17 +66,18 @@ public class InquiryFragment extends Fragment {
         Button exitBtn = view.findViewById(R.id.inq_exit);
         Button cancelBtn = view.findViewById(R.id.inq_cancel);
 
-        Date enroll = Converter.getDateByString(carInfo.getRegisterTime());
-        Date out = new Date();
+        Resources resources = getResources();
+        db = FirebaseFirestore.getInstance();
 
-        int takenTime = Calculator.BetweenMinutes(enroll, out);
-        int feeInteger = Calculator.FeeCalculator(takenTime);
+        final CarInquiryInfo carInquiryInfo = new CarInquiryInfo(carInfo);
 
-        carNumber.setText(carInfo.getCarNumber());
-        enrollDate.setText(carInfo.getRegisterTime());
-        outDate.setText(Converter.getStringByDate(out));
-        taken.setText(Integer.toString(takenTime));
-        fee.setText(Integer.toString(feeInteger));
+        carNumber.setText(resources.getString(R.string.menu_car_number) + " : " + carInquiryInfo.getCarNumber());
+        enrollDate.setText(resources.getString(R.string.menu_enroll_time)+ " : " + carInquiryInfo.getEnrollTime());
+        outDate.setText(resources.getString(R.string.menu_exit_time)+ " : " + carInquiryInfo.getUnregisterTime());
+        taken.setText(resources.getString(R.string.menu_taken_time)+ " : " + carInquiryInfo.getTakenTime());
+        fee.setText(resources.getString(R.string.menu_fee)+ " : " + carInquiryInfo.getFee());
+
+
 
         exitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +88,11 @@ public class InquiryFragment extends Fragment {
                 myRef.setValue(null);
 
                 ChangeFragmentToMain();
+
+                db.collection("PARKINGLOT")
+                        .document(UserData.getInstance().getParkingLot())
+                        .collection(Integer.toHexString(carInfo.getCarNumber().hashCode()))
+                        .add(carInquiryInfo);
             }
         });
 

@@ -8,13 +8,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CarInquiryInfo {
-    CarInfo carInfo;
+    String carNumber;
+    String enrollTime;
     String unregisterTime;
     String fee;
     String takenTime;
 
     public CarInquiryInfo(CarInfo carInfo){
-        this.carInfo = carInfo;
+        carNumber = carInfo.getCarNumber();
+        enrollTime = carInfo.getRegisterTime();
 
         Date registerDate = Converter.getDateByString(carInfo.registerTime);
         Date unregisterDate = new Date();
@@ -25,7 +27,25 @@ public class CarInquiryInfo {
         int feeInteger = Calculator.FeeCalculator(takenTimeInteger);
         takenTime = Integer.toString(takenTimeInteger);
         fee = Integer.toString(feeInteger);
+    }
 
+    public String getCarNumber() {
+        return carNumber;
+    }
 
+    public String getEnrollTime() {
+        return enrollTime;
+    }
+
+    public String getUnregisterTime() {
+        return unregisterTime;
+    }
+
+    public String getFee() {
+        return fee;
+    }
+
+    public String getTakenTime() {
+        return takenTime;
     }
 }

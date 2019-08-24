@@ -1,5 +1,6 @@
 package com.cgwprj.parkingmanager.Views.Fragments;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -56,8 +57,10 @@ public class EnrollFragment extends Fragment {
         Date now = new Date();
         final String nowString = Converter.getStringByDate(now);
 
-        car.setText(carNumber);
-        enrollDate.setText(nowString);
+        Resources resources = getResources();
+
+        car.setText(resources.getString(R.string.menu_car_number)+ " : " + carNumber);
+        enrollDate.setText(resources.getString(R.string.menu_enroll_time) + " : " + nowString);
 
         enrollBtn.setOnClickListener(new View.OnClickListener() {
             @Override

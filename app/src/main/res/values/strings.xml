@@ -21,4 +21,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="menu_car_number">차 번호</string>
+    <string name="menu_enroll_time">입차 시간</string>
+    <string name="menu_exit_time">출차 시간</string>
+    <string name="menu_taken_time">주차 시간</string>
+    <string name="menu_fee">주차 요금</string>
 </resources>
