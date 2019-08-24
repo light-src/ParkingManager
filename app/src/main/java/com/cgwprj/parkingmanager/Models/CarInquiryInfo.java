@@ -14,6 +14,8 @@ public class CarInquiryInfo {
     String fee;
     String takenTime;
 
+    public CarInquiryInfo(){}
+
     public CarInquiryInfo(CarInfo carInfo){
         carNumber = carInfo.getCarNumber();
         enrollTime = carInfo.getRegisterTime();

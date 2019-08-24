@@ -23,6 +23,7 @@ import com.cgwprj.parkingmanager.Models.CarInfo;
 import com.cgwprj.parkingmanager.R;
 import com.cgwprj.parkingmanager.Views.Fragments.EnrollFragment;
 import com.cgwprj.parkingmanager.Views.Fragments.InquiryFragment;
+import com.cgwprj.parkingmanager.Views.Fragments.LookupFragment;
 import com.cgwprj.parkingmanager.Views.Fragments.MainFragment;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -130,7 +131,10 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_fragment);
 
-        if (fragment instanceof MainFragment){
+        if (fragment instanceof MainFragment
+        || fragment instanceof EnrollFragment
+        || fragment instanceof InquiryFragment
+        ){
             if (searchedCar != null){
                 // 정산
                 replaceFragment(InquiryFragment.newInstance(searchedCar));
@@ -141,8 +145,10 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        else{
-            // TODO : Add some other case like inquire.
+        else if (
+                fragment instanceof LookupFragment
+        ){
+            replaceFragment(LookupFragment.newInstance(carNumber));
         }
     }
 
@@ -196,9 +202,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
+            ChangeFragmentToMain();
         } else if (id == R.id.nav_gallery) {
-
+            replaceFragment(LookupFragment.newInstance(""));
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_tools) {

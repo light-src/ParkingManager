@@ -9,4 +9,5 @@
     <dimen name="small_font">15sp</dimen>
     <dimen name="button_font">20sp</dimen>
     <dimen name="middle_font">20sp</dimen>
+    <dimen name="big_font">35sp</dimen>
 </resources>
