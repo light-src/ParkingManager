@@ -27,6 +27,7 @@ import com.cgwprj.parkingmanager.Views.Fragments.EnrollFragment;
 import com.cgwprj.parkingmanager.Views.Fragments.InquiryFragment;
 import com.cgwprj.parkingmanager.Views.Fragments.LookupFragment;
 import com.cgwprj.parkingmanager.Views.Fragments.MainFragment;
+import com.cgwprj.parkingmanager.Views.ResetDialog;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -212,22 +213,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_inquiry) {
             replaceFragment(LookupFragment.newInstance(""));
         } else if (id == R.id.nav_reset){
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("정말 초기화 하시겠습니까?")
-                    .setPositiveButton(getResources().getText(R.string.reset), new DialogInterface.OnClickListener(){
-                        public void onClick(DialogInterface dialog, int id) {
-                            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference()
-                                    .child(UserData.getInstance().getParkingLot());
 
-                            myRef.setValue("");
-                        }
-                    })
-                    .setNegativeButton(getResources().getText(R.string.cancel), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-            builder.show();
+        final ResetDialog builder = new ResetDialog(this);
+        builder.show();
+
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
