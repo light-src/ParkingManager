@@ -1,5 +1,6 @@
 package com.cgwprj.parkingmanager.Views.Acitivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -195,6 +197,10 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void setSearchBar(String Number){
+        search.setText(Number);
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -203,8 +209,25 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             ChangeFragmentToMain();
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_inquiry) {
             replaceFragment(LookupFragment.newInstance(""));
+        } else if (id == R.id.nav_reset){
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("정말 초기화 하시겠습니까?")
+                    .setPositiveButton(getResources().getText(R.string.reset), new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int id) {
+                            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference()
+                                    .child(UserData.getInstance().getParkingLot());
+
+                            myRef.setValue("");
+                        }
+                    })
+                    .setNegativeButton(getResources().getText(R.string.cancel), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+            builder.show();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
