@@ -2,12 +2,9 @@ package com.cgwprj.parkingmanager.Models;
 
 import com.cgwprj.parkingmanager.Utils.Calculator;
 import com.cgwprj.parkingmanager.Utils.Converter;
-import com.cgwprj.parkingmanager.Utils.StringConstants;
-
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CarInquiryInfo {
+public class CarInquiryInfo implements Comparable{
     String carNumber;
     String enrollTime;
     String unregisterTime;
@@ -49,5 +46,17 @@ public class CarInquiryInfo {
 
     public String getTakenTime() {
         return takenTime;
+    }
+
+    @Override
+    public int compareTo(Object other) {
+
+        if (other instanceof CarInquiryInfo){
+            CarInquiryInfo comp = (CarInquiryInfo) other;
+
+            return unregisterTime.compareTo(comp.getUnregisterTime()) * -1;
+        }
+
+        return 0;
     }
 }

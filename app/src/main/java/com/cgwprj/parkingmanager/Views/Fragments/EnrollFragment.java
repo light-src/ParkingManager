@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cgwprj.parkingmanager.Data.UserData;
 import com.cgwprj.parkingmanager.Models.CarInfo;
@@ -71,6 +72,7 @@ public class EnrollFragment extends Fragment {
 
                 sendCarInfoToFireBase(carInfo);
                 ChangeFragmentToMain();
+                Toast.makeText(getContext(), carInfo.getCarNumber() + " 입차 하였습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 

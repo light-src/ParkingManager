@@ -2,7 +2,6 @@ package com.cgwprj.parkingmanager.Views.Fragments;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,17 +14,10 @@ import com.cgwprj.parkingmanager.Data.UserData;
 import com.cgwprj.parkingmanager.Models.CarInfo;
 import com.cgwprj.parkingmanager.Models.CarInquiryInfo;
 import com.cgwprj.parkingmanager.R;
-import com.cgwprj.parkingmanager.Utils.Calculator;
-import com.cgwprj.parkingmanager.Utils.Converter;
 import com.cgwprj.parkingmanager.Views.Acitivity.MainActivity;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Date;
 
 public class InquiryFragment extends Fragment {
 
@@ -93,6 +85,8 @@ public class InquiryFragment extends Fragment {
                         .document(UserData.getInstance().getParkingLot())
                         .collection(Integer.toHexString(carInfo.getCarNumber().hashCode()))
                         .add(carInquiryInfo);
+
+                Toast.makeText(getContext(), carInfo.getCarNumber() + " 출차 하였습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 

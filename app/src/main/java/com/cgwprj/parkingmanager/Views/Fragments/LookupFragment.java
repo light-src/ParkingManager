@@ -2,7 +2,6 @@ package com.cgwprj.parkingmanager.Views.Fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -17,11 +16,9 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.cgwprj.parkingmanager.Data.UserData;
-import com.cgwprj.parkingmanager.Models.CarInfo;
 import com.cgwprj.parkingmanager.Models.CarInquiryInfo;
 import com.cgwprj.parkingmanager.R;
 import com.cgwprj.parkingmanager.Utils.StringConstants;
-import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,10 +26,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
-import static com.firebase.ui.auth.AuthUI.TAG;
 
 public class LookupFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -84,15 +80,18 @@ public class LookupFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 CarInquiryInfo carInquiryInfo =  document.toObject(CarInquiryInfo.class);
                                 carInquiryInfos.add(carInquiryInfo);
-
-                                HashMap<String,String> map = new HashMap<>();
-                                map.put("CarNumber", carInquiryInfo.getCarNumber());
-                                map.put("Register", carInquiryInfo.getEnrollTime());
-                                DataList.add(map);
-
-                                simpleAdapter.notifyDataSetChanged();
                             }
 
+                            Collections.sort(carInquiryInfos);
+
+                            for(CarInquiryInfo carInquiryInfo : carInquiryInfos) {
+                                HashMap<String,String> map = new HashMap<>();
+                                map.put("CarNumber", carInquiryInfo.getCarNumber());
+                                map.put("Register", "출차 : " + carInquiryInfo.getUnregisterTime());
+                                DataList.add(map);
+                            }
+
+                            simpleAdapter.notifyDataSetChanged();
 
                             TextView textView = view.findViewById(R.id.lookup_text);
                             if (carInquiryInfos.size() > 0){
