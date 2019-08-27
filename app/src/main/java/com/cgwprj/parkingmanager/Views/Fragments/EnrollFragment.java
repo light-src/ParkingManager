@@ -48,7 +48,7 @@ public class EnrollFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_enroll, container, false);
+        final View view = inflater.inflate(R.layout.fragment_enroll, container, false);
 
         final TextView car = view.findViewById(R.id.enroll_car_number);
         TextView enrollDate = view.findViewById(R.id.enroll_enroll_date);
@@ -72,7 +72,7 @@ public class EnrollFragment extends Fragment {
 
                 sendCarInfoToFireBase(carInfo);
                 ChangeFragmentToMain();
-                Toast.makeText(getContext(), carInfo.getCarNumber() + " 입차 하였습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), carInfo.getCarNumber() + " 입차 하였습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 

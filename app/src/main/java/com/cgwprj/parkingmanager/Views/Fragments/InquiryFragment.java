@@ -48,7 +48,7 @@ public class InquiryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_inquiry, container, false);
+        final View view = inflater.inflate(R.layout.fragment_inquiry, container, false);
 
         final TextView carNumber = view.findViewById(R.id.inq_car_number);
         TextView enrollDate = view.findViewById(R.id.inq_enroll_date);
@@ -86,7 +86,7 @@ public class InquiryFragment extends Fragment {
                         .collection(Integer.toHexString(carInfo.getCarNumber().hashCode()))
                         .add(carInquiryInfo);
 
-                Toast.makeText(getContext(), carInfo.getCarNumber() + " 출차 하였습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), carInfo.getCarNumber() + " 출차 하였습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 

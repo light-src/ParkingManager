@@ -13,6 +13,9 @@ import com.cgwprj.parkingmanager.R;
 import com.cgwprj.parkingmanager.Views.Acitivity.MainActivity;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,6 +45,13 @@ public class MainFragment extends android.support.v4.app.Fragment{
         map.put("CarNumber", c.getCarNumber());
         map.put("Register", c.getRegisterTime());
         DataList.add(map);
+
+        Collections.sort(DataList, new Comparator<HashMap<String, String>>() {
+            @Override
+            public int compare(HashMap<String, String> o1, HashMap<String, String> o2) {
+                return o1.get("CarNumber").compareTo(o2.get("CarNumber"));
+            }
+        });
 
         notifyDataSetChanged();
     }

@@ -37,6 +37,7 @@ public class SplashActivity extends AppCompatActivity {
         else{
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
 
     }
@@ -82,8 +83,8 @@ public class SplashActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(this, MainActivity.class);
                 UserData.getInstance().setUser(user);
-                UserData.getInstance().setParkingLot(Integer.toString(email.hashCode()));
                 startActivity(intent);
+                finish();
                 // ...
             } else {
                 // Sign in failed. If response is null the user canceled the

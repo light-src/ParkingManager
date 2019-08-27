@@ -35,6 +35,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("All")
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity
         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
             CarInfo carInfo = dataSnapshot.getValue(CarInfo.class);
             carInfos.add(carInfo);
+            Collections.sort(carInfos);
 
             if (isMainFragment()){
                 MainFragment mainFragment = (MainFragment) fragment;

@@ -2,7 +2,7 @@ package com.cgwprj.parkingmanager.Models;
 
 import java.io.Serializable;
 
-public class CarInfo implements Serializable {
+public class CarInfo implements Serializable, Comparable {
     String carNumber;
     String registerTime;
 
@@ -39,5 +39,16 @@ public class CarInfo implements Serializable {
         hash += registerTime.hashCode() * 31;
 
         return hash;
+    }
+
+    @Override
+    public int compareTo(Object o){
+        if (o instanceof CarInfo){
+            CarInfo other = (CarInfo) o;
+
+            return carNumber.compareTo(other.getCarNumber());
+        }
+
+        return 0;
     }
 }

@@ -1,7 +1,6 @@
 package com.cgwprj.parkingmanager;
 
 import com.cgwprj.parkingmanager.Utils.Calculator;
-import com.cgwprj.parkingmanager.Utils.IntegerConstants;
 import com.cgwprj.parkingmanager.Utils.StringConstants;
 
 import org.junit.Test;
@@ -19,27 +18,83 @@ import static org.junit.Assert.*;
 public class CalculatorTest {
     @Test
     public void TestCalculator() {
-        String prevTime = "2019-08-18 22:04:46.382";
-        try {
-            Date prv = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(prevTime);
-            Date cur = new Date();
 
+        try {
+
+            String prevTime = "21:09 오후 19/08/27";
+            String curTime = "21:18 오후 19/08/27";
+
+            Date prv = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(prevTime);
+            Date cur = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(curTime);
             int takenTime = Calculator.BetweenMinutes(prv, cur);
             int fee = Calculator.FeeCalculator(takenTime);
 
-            if (takenTime < 10)
-                assertEquals(fee, 0);
+            assertEquals(fee, 0);
 
-            else if (takenTime < 30)
-                assertEquals(fee, IntegerConstants.FEE_FIRST_BOUNDARY_FEE.getConstants());
 
-            else {
-                int overTime = takenTime - IntegerConstants.FEE_FIRST_BOUNDARY_TIME.getConstants();
-                int overStep = overTime / 10;
-                int expectedFee = IntegerConstants.FEE_FIRST_BOUNDARY_FEE.getConstants() +
-                        (IntegerConstants.FEE_PER_TEN_MINUTES.getConstants() * overStep);
-                assertEquals(fee,expectedFee);
-            }
+            prevTime = "21:09 오후 19/08/27";
+            curTime = "21:19 오후 19/08/27";
+
+            prv = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(prevTime);
+            cur = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(curTime);
+            takenTime = Calculator.BetweenMinutes(prv, cur);
+            fee = Calculator.FeeCalculator(takenTime);
+
+            assertEquals(fee, 0);
+
+
+            prevTime = "21:09 오후 19/08/27";
+            curTime = "21:20 오후 19/08/27";
+
+            prv = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(prevTime);
+            cur = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(curTime);
+            takenTime = Calculator.BetweenMinutes(prv, cur);
+            fee = Calculator.FeeCalculator(takenTime);
+
+            assertEquals(fee, 1000);
+
+
+            prevTime = "21:09 오후 19/08/27";
+            curTime = "21:39 오후 19/08/27";
+
+            prv = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(prevTime);
+            cur = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(curTime);
+            takenTime = Calculator.BetweenMinutes(prv, cur);
+            fee = Calculator.FeeCalculator(takenTime);
+
+            assertEquals(fee, 1000);
+
+
+            prevTime = "21:09 오후 19/08/27";
+            curTime = "21:40 오후 19/08/27";
+
+            prv = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(prevTime);
+            cur = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(curTime);
+            takenTime = Calculator.BetweenMinutes(prv, cur);
+            fee = Calculator.FeeCalculator(takenTime);
+
+            assertEquals(fee, 1400);
+
+            prevTime = "21:09 오후 19/08/27";
+            curTime = "21:49 오후 19/08/27";
+
+            prv = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(prevTime);
+            cur = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(curTime);
+            takenTime = Calculator.BetweenMinutes(prv, cur);
+            fee = Calculator.FeeCalculator(takenTime);
+
+            assertEquals(fee, 1400);
+
+
+            prevTime = "21:09 오후 19/08/27";
+            curTime = "21:50 오후 19/08/27";
+
+            prv = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(prevTime);
+            cur = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(curTime);
+            takenTime = Calculator.BetweenMinutes(prv, cur);
+            fee = Calculator.FeeCalculator(takenTime);
+
+            assertEquals(fee, 1800);
 
         }catch (java.text.ParseException e){
             assert true;
