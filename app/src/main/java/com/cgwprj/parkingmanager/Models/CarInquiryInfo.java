@@ -1,36 +1,62 @@
 package com.cgwprj.parkingmanager.Models;
 
-import android.util.Log;
-
 import com.cgwprj.parkingmanager.Utils.Calculator;
-import com.cgwprj.parkingmanager.Utils.StringConstants;
-
-import java.text.SimpleDateFormat;
+import com.cgwprj.parkingmanager.Utils.Converter;
 import java.util.Date;
 
-public class CarInquiryInfo {
-    CarInfo carInfo;
+public class CarInquiryInfo implements Comparable{
+    String carNumber;
+    String enrollTime;
     String unregisterTime;
     String fee;
     String takenTime;
 
+    public CarInquiryInfo(){}
+
     public CarInquiryInfo(CarInfo carInfo){
-        this.carInfo = carInfo;
+        carNumber = carInfo.getCarNumber();
+        enrollTime = carInfo.getRegisterTime();
 
-        try {
-            Date registerDate = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(carInfo.registerTime);
-            Date unregisterDate = new Date();
+        Date registerDate = Converter.getDateByString(carInfo.registerTime);
+        Date unregisterDate = new Date();
 
-            unregisterTime = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).format(unregisterDate);
+        unregisterTime = Converter.getStringByDate(unregisterDate);
 
-            int takenTimeInteger = Calculator.BetweenMinutes(registerDate, unregisterDate);
-            int feeInteger = Calculator.FeeCalculator(takenTimeInteger);
-            takenTime = Integer.toString(takenTimeInteger);
-            fee = Integer.toString(feeInteger);
+        int takenTimeInteger = Calculator.BetweenMinutes(registerDate, unregisterDate);
+        int feeInteger = Calculator.FeeCalculator(takenTimeInteger);
+        takenTime = Integer.toString(takenTimeInteger);
+        fee = Integer.toString(feeInteger);
+    }
+
+    public String getCarNumber() {
+        return carNumber;
+    }
+
+    public String getEnrollTime() {
+        return enrollTime;
+    }
+
+    public String getUnregisterTime() {
+        return unregisterTime;
+    }
+
+    public String getFee() {
+        return fee;
+    }
+
+    public String getTakenTime() {
+        return takenTime;
+    }
+
+    @Override
+    public int compareTo(Object other) {
+
+        if (other instanceof CarInquiryInfo){
+            CarInquiryInfo comp = (CarInquiryInfo) other;
+
+            return unregisterTime.compareTo(comp.getUnregisterTime()) * -1;
         }
-        catch(java.text.ParseException e){
-            Log.e("ERROR", e.toString());
-        }
 
+        return 0;
     }
 }

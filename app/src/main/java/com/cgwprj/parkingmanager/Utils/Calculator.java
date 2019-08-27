@@ -28,7 +28,7 @@ public class Calculator {
             // Over 30 minutes.
             if ( takenTime > IntegerConstants.FEE_FIRST_BOUNDARY_TIME.getConstants() ){
                 int overTime = takenTime - IntegerConstants.FEE_FIRST_BOUNDARY_TIME.getConstants();
-                int overStep = overTime / 10;
+                int overStep = (overTime - 1)  / 10 + 1;
                 fee += ( overStep * IntegerConstants.FEE_PER_TEN_MINUTES.getConstants());
             }
 

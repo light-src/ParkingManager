@@ -1,7 +1,8 @@
 package com.cgwprj.parkingmanager.Utils;
 
 public enum StringConstants {
-    DATE_FORMAT("yyyy-MM-dd HH:mm:ss.S");
+    DATE_FORMAT("HH:mm a yy/MM/dd"),
+    COLLECTION_PATH_PARKINGLOT("PARKINGLOT");
 
     private final String constants;
 
@@ -12,6 +13,4 @@ public enum StringConstants {
     public String getConstants(){
         return constants;
     }
-
-
 }

@@ -9,32 +9,40 @@
     tools:showIn="@layout/app_bar_main">
 
     <LinearLayout
-        android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/main_fragment">
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/search_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:hint="@string/search_hint" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/search_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/search_button" />
     </LinearLayout>
 
-    <View
+    <FrameLayout
         android:id="@+id/main_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/search_bar" />
+    />
+
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
