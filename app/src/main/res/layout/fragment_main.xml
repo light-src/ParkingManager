@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.Fragments.MainFragment">
+    tools:context=".Controllers.Fragments.MainFragment">
 
     <ListView
         android:id="@+id/car_list_view"

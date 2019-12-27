@@ -1,13 +1,10 @@
 package com.cgwprj.parkingmanager.Data;
 
-import com.google.firebase.auth.FirebaseUser;
-
 public class UserData {
     private UserData(){}
 
     private static UserData instance = null;
     private String parkingLot = "TEMP";
-    private FirebaseUser user;
 
     public static UserData getInstance(){
         if(instance != null)
@@ -26,11 +23,4 @@ public class UserData {
         this.parkingLot = parkingLot;
     }
 
-    public FirebaseUser getUser() {
-        return user;
-    }
-
-    public void setUser(FirebaseUser user) {
-        this.user = user;
-    }
 }
