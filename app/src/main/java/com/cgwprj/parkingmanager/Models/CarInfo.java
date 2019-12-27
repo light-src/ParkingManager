@@ -3,8 +3,8 @@ package com.cgwprj.parkingmanager.Models;
 import java.io.Serializable;
 
 public class CarInfo implements Serializable, Comparable {
-    String carNumber;
-    String registerTime;
+    private String carNumber;
+    private String registerTime;
 
     public String getCarNumber() {
         return carNumber;

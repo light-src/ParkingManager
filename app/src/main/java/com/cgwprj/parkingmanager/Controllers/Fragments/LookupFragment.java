@@ -1,4 +1,4 @@
-package com.cgwprj.parkingmanager.Views.Fragments;
+package com.cgwprj.parkingmanager.Controllers.Fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;

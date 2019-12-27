@@ -1,15 +1,15 @@
 package com.cgwprj.parkingmanager.Models;
 
 import com.cgwprj.parkingmanager.Utils.Calculator;
-import com.cgwprj.parkingmanager.Utils.Converter;
+import com.cgwprj.parkingmanager.Utils.DateConverter;
 import java.util.Date;
 
 public class CarInquiryInfo implements Comparable{
-    String carNumber;
-    String enrollTime;
-    String unregisterTime;
-    String fee;
-    String takenTime;
+    private String carNumber;
+    private String enrollTime;
+    private String unregisterTime;
+    private String fee;
+    private String takenTime;
 
     public CarInquiryInfo(){}
 
@@ -17,13 +17,13 @@ public class CarInquiryInfo implements Comparable{
         carNumber = carInfo.getCarNumber();
         enrollTime = carInfo.getRegisterTime();
 
-        Date registerDate = Converter.getDateByString(carInfo.registerTime);
+        Date registerDate = DateConverter.getDateByString(carInfo.getRegisterTime());
         Date unregisterDate = new Date();
 
-        unregisterTime = Converter.getStringByDate(unregisterDate);
+        unregisterTime = DateConverter.getStringByDate(unregisterDate);
 
         int takenTimeInteger = Calculator.BetweenMinutes(registerDate, unregisterDate);
-        int feeInteger = Calculator.FeeCalculator(takenTimeInteger);
+        int feeInteger = Calculator.FeeCalculate(takenTimeInteger);
         takenTime = Integer.toString(takenTimeInteger);
         fee = Integer.toString(feeInteger);
     }

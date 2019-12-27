@@ -27,7 +27,7 @@ public class CalculatorTest {
             Date prv = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(prevTime);
             Date cur = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(curTime);
             int takenTime = Calculator.BetweenMinutes(prv, cur);
-            int fee = Calculator.FeeCalculator(takenTime);
+            int fee = Calculator.FeeCalculate(takenTime);
 
             assertEquals(fee, 0);
 
@@ -38,7 +38,7 @@ public class CalculatorTest {
             prv = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(prevTime);
             cur = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(curTime);
             takenTime = Calculator.BetweenMinutes(prv, cur);
-            fee = Calculator.FeeCalculator(takenTime);
+            fee = Calculator.FeeCalculate(takenTime);
 
             assertEquals(fee, 0);
 
@@ -49,7 +49,7 @@ public class CalculatorTest {
             prv = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(prevTime);
             cur = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(curTime);
             takenTime = Calculator.BetweenMinutes(prv, cur);
-            fee = Calculator.FeeCalculator(takenTime);
+            fee = Calculator.FeeCalculate(takenTime);
 
             assertEquals(fee, 1000);
 
@@ -60,7 +60,7 @@ public class CalculatorTest {
             prv = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(prevTime);
             cur = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(curTime);
             takenTime = Calculator.BetweenMinutes(prv, cur);
-            fee = Calculator.FeeCalculator(takenTime);
+            fee = Calculator.FeeCalculate(takenTime);
 
             assertEquals(fee, 1000);
 
@@ -71,7 +71,7 @@ public class CalculatorTest {
             prv = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(prevTime);
             cur = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(curTime);
             takenTime = Calculator.BetweenMinutes(prv, cur);
-            fee = Calculator.FeeCalculator(takenTime);
+            fee = Calculator.FeeCalculate(takenTime);
 
             assertEquals(fee, 1400);
 
@@ -81,7 +81,7 @@ public class CalculatorTest {
             prv = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(prevTime);
             cur = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(curTime);
             takenTime = Calculator.BetweenMinutes(prv, cur);
-            fee = Calculator.FeeCalculator(takenTime);
+            fee = Calculator.FeeCalculate(takenTime);
 
             assertEquals(fee, 1400);
 
@@ -92,7 +92,7 @@ public class CalculatorTest {
             prv = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(prevTime);
             cur = new SimpleDateFormat(StringConstants.DATE_FORMAT.getConstants()).parse(curTime);
             takenTime = Calculator.BetweenMinutes(prv, cur);
-            fee = Calculator.FeeCalculator(takenTime);
+            fee = Calculator.FeeCalculate(takenTime);
 
             assertEquals(fee, 1800);
 

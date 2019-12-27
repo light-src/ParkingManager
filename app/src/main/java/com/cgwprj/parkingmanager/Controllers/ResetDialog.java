@@ -1,12 +1,10 @@
-package com.cgwprj.parkingmanager.Views;
+package com.cgwprj.parkingmanager.Controllers;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
