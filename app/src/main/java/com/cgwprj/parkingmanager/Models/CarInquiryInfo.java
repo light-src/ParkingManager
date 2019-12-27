@@ -52,9 +52,12 @@ public class CarInquiryInfo implements Comparable{
     public int compareTo(Object other) {
 
         if (other instanceof CarInquiryInfo){
-            CarInquiryInfo comp = (CarInquiryInfo) other;
+            CarInquiryInfo compInfo = (CarInquiryInfo) other;
 
-            return unregisterTime.compareTo(comp.getUnregisterTime()) * -1;
+            Date origin = DateConverter.getDateByString(this.unregisterTime);
+            Date comp = DateConverter.getDateByString(compInfo.unregisterTime);
+
+            return origin.compareTo(comp) * -1;
         }
 
         return 0;
