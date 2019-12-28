@@ -49,12 +49,27 @@ public class CarInquiryInfo implements Comparable{
     }
 
     @Override
+    public int hashCode(){
+        int hash = carNumber.hashCode();
+
+        hash = hash * 31 + enrollTime.hashCode();
+        hash = hash * 31 + unregisterTime.hashCode();
+        hash = hash * 31 + fee.hashCode();
+        hash = hash * 31 + takenTime.hashCode();
+
+        return hash;
+    }
+
+    @Override
     public int compareTo(Object other) {
 
         if (other instanceof CarInquiryInfo){
-            CarInquiryInfo comp = (CarInquiryInfo) other;
+            CarInquiryInfo compInfo = (CarInquiryInfo) other;
 
-            return unregisterTime.compareTo(comp.getUnregisterTime()) * -1;
+            Date origin = DateConverter.getDateByString(this.unregisterTime);
+            Date comp = DateConverter.getDateByString(compInfo.unregisterTime);
+
+            return origin.compareTo(comp) * -1;
         }
 
         return 0;
