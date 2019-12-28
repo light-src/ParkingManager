@@ -13,8 +13,6 @@ import com.cgwprj.parkingmanager.Models.CarInfo;
 import com.cgwprj.parkingmanager.R;
 import com.cgwprj.parkingmanager.Controllers.Acitivity.MainActivity;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
