@@ -21,10 +21,6 @@ public class ResetDialog extends Dialog {
     private Button mPositiveButton;
     private Button mNegativeButton;
 
-    private View.OnClickListener mPositiveListener;
-    private View.OnClickListener mNegativeListener;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

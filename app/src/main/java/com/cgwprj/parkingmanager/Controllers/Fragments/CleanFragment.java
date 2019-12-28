@@ -1,10 +1,12 @@
 package com.cgwprj.parkingmanager.Controllers.Fragments;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class CleanFragment extends android.support.v4.app.Fragment{
 
@@ -118,26 +122,51 @@ public class CleanFragment extends android.support.v4.app.Fragment{
         cleanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (CarInfo carInfo : carInfos) {
-                    if (clickedNumber.get(carInfo.getCarNumber()) == null) {
-                        CarInquiryInfo carInquiryInfo = new CarInquiryInfo(carInfo);
 
-                        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference()
-                                .child(UserData.getInstance().getParkingLot())
-                                .child(Integer.toString(carInfo.hashCode()));
-                        myRef.setValue(null);
+                AlertDialog.Builder oDialog = new AlertDialog.Builder(getContext(),
+                        android.R.style.Theme_DeviceDefault_Light_Dialog);
 
-                        db.collection("PARKINGLOT")
-                                .document(UserData.getInstance().getParkingLot())
-                                .collection(Integer.toHexString(carInfo.getCarNumber().hashCode()))
-                                .document(Integer.toString(carInquiryInfo.hashCode()))
-                                .set(carInquiryInfo);
+                String message = Integer.toString(clickedNumber.size()) + "대를 제외한 모든 차량을 삭제하시겠습니까?";
+                oDialog.setMessage(message)
+                        .setPositiveButton("아니오", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
 
-                        Toast.makeText(view.getContext(), carInfo.getCarNumber() + " 출차 하였습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                            }
+                        })
+                        .setNeutralButton("예", new DialogInterface.OnClickListener()
+                        {
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                for (CarInfo carInfo : carInfos) {
+                                    if (clickedNumber.get(carInfo.getCarNumber()) == null) {
+                                        CarInquiryInfo carInquiryInfo = new CarInquiryInfo(carInfo);
 
-                ((MainActivity) getActivity()).ChangeFragmentToMain();
+                                        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference()
+                                                .child(UserData.getInstance().getParkingLot())
+                                                .child(Integer.toString(carInfo.hashCode()));
+                                        myRef.setValue(null);
+
+                                        db.collection("PARKINGLOT")
+                                                .document(UserData.getInstance().getParkingLot())
+                                                .collection(Integer.toHexString(carInfo.getCarNumber().hashCode()))
+                                                .document(Integer.toString(carInquiryInfo.hashCode()))
+                                                .set(carInquiryInfo);
+
+                                        Toast.makeText(view.getContext(), carInfo.getCarNumber() + " 출차 하였습니다.", Toast.LENGTH_SHORT).show();
+
+                                        ((MainActivity) getActivity()).ChangeFragmentToMain();
+                                    }
+                                }
+                            }
+                        })
+                        .show();
+
+
+
+
             }
         });
 
