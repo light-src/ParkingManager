@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.cgwprj.parkingmanager.Models.CarInfo;
 import com.cgwprj.parkingmanager.R;
@@ -22,8 +23,9 @@ public class MainFragment extends android.support.v4.app.Fragment{
 
     List<CarInfo> carInfos;
     SimpleAdapter simpleAdapter;
-    int carInfosLength;
+
     List<HashMap<String,String>> DataList = new ArrayList<>();
+    TextView carNumberView;
 
     public MainFragment() {
 
@@ -64,6 +66,7 @@ public class MainFragment extends android.support.v4.app.Fragment{
     }
 
     public void notifyDataSetChanged(){
+        carNumberView.setText("등록된 차 : " + (carInfos.size()));
         simpleAdapter.notifyDataSetChanged();
     }
 
@@ -79,6 +82,7 @@ public class MainFragment extends android.support.v4.app.Fragment{
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+        carNumberView = view.findViewById(R.id.car_number_view);
         ListView listView = view.findViewById(R.id.car_list_view);
 
         setCarInfos(((MainActivity) getActivity()).getCarInfos());
@@ -102,6 +106,8 @@ public class MainFragment extends android.support.v4.app.Fragment{
                 ((MainActivity) getActivity()).setSearchBar(carInfos.get(position).getCarNumber());
             }
         });
+
+        carNumberView.setText("등록된 차 : " + Integer.toString(carInfos.size()));
 
         return view;
     }
