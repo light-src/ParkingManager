@@ -19,6 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class InquiryFragment extends Fragment {
 
     private static final String CARINFO = "CARINFO";
@@ -84,7 +87,8 @@ public class InquiryFragment extends Fragment {
                 db.collection("PARKINGLOT")
                         .document(UserData.getInstance().getParkingLot())
                         .collection(Integer.toHexString(carInfo.getCarNumber().hashCode()))
-                        .add(carInquiryInfo);
+                        .document(Integer.toString(carInquiryInfo.hashCode()))
+                        .set(carInquiryInfo);
 
                 Toast.makeText(view.getContext(), carInfo.getCarNumber() + " 출차 하였습니다.", Toast.LENGTH_SHORT).show();
             }

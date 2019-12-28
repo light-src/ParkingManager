@@ -49,6 +49,18 @@ public class CarInquiryInfo implements Comparable{
     }
 
     @Override
+    public int hashCode(){
+        int hash = carNumber.hashCode();
+
+        hash = hash * 31 + enrollTime.hashCode();
+        hash = hash * 31 + unregisterTime.hashCode();
+        hash = hash * 31 + fee.hashCode();
+        hash = hash * 31 + takenTime.hashCode();
+
+        return hash;
+    }
+
+    @Override
     public int compareTo(Object other) {
 
         if (other instanceof CarInquiryInfo){
